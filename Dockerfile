@@ -1,12 +1,14 @@
 FROM python:3.9-alpine
 
-RUN pip install -r ./requirements.txt
+COPY . /data
 
-COPY . /opt/
+WORKDIR /data
+
+RUN pip install -r ./requirements.txt
 
 EXPOSE 8080
 EXPOSE 8081
 
-WORKDIR /opt
+WORKDIR /data/app
 
 ENTRYPOINT ["python", "app.py"]
