@@ -14,3 +14,7 @@ Header name and colors are customizable via environment variables or command lin
 ```shell
 python app.py --title="Your Title" --color="blue"
 ```
+
+## Contributors
+
+Nick Thompson (<https://github.com/nsthompson>)
