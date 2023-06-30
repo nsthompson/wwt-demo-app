@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WWT Demo App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  </head>
+  <body>
+    <header style="background: {{ color }};">
+      <div class="container">
+        <h1 class="logo">{{ header_title }}</h1>
+        <strong><nav>
+          <ul class="menu">
+            <li><a href=".">New Joke</a></li>
+            <li><a href="https://www.wwt.com/" target="_blank">WWT.com</a></li>
+            <li><a href="https://www.wwt.com/atc" target="_blank">WWT ATC</a></li>
+          </ul>
+        </nav></strong>
+      </div>
+    </header>
+    <div class="container">
+        <div class="images">
+            <img src="{{url_for('static', filename='wwt-pete.png')}}" align="middle" />
+        </div>
+    </div>
+    <div class="container">
+        <div class="joke">
+            <p>{{ joke }}</p>
+        </div>
+    </div>
+  </body>
+</html>
