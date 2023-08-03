@@ -35,6 +35,18 @@ body {
     margin-right: auto;
     justify-content: center;
   }
+  .footer {
+    height: 35px;
+    opacity: .9;
+    margin-bottom: 10px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #ffffff;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
   .images {
     background-color: #FFFFFF;
     margin-left: auto;
@@ -53,6 +65,11 @@ body {
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
          border-radius: 6px;
+  }
+  .hostname {
+    padding: 10px;
+    font-size: .75em;
+    color: #000;
   }
   h2 {
     font-size: 3em;
