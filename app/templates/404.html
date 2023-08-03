@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Page Not Found</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <div class="small-container">
+        <p class="thought">{{ description }}</p>
+        <img src="{{url_for('static', filename='pete.png')}}" class="images"/>
+      </div>
+    </div>
+    <div class="footer">
+        <div class="hostname">
+          <p>Hostname: {{ name }}</p>
+        </div>
+    </div>
+  </body>
+</html>

@@ -1,7 +1,12 @@
+# deploymentTarget can be kubernetes or openshift
 deploymentTarget: kubernetes
+# used when deploymentTarget is kubernetes
 deploymentIngress:
   type: nginx
   host: kubernetes.docker.internal
+# used when deploymentTarget is openshift
+openshiftCluster:
+  ingressDomain: apps.observelab.rhhc.wwtatc.com
 
 replicaCount: 2
 
@@ -15,6 +20,3 @@ env:
   name: dev
   headerColor: blue
   headerTitle: WWT Demo Application
-
-openshiftCluster:
-  ingressDomain: apps.observelab.rhhc.wwtatc.com

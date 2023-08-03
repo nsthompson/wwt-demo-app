@@ -35,6 +35,12 @@ body {
     margin-right: auto;
     justify-content: center;
   }
+  .small-container{
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+  }
   .footer {
     height: 35px;
     opacity: .9;
@@ -47,12 +53,54 @@ body {
     width: 100%;
     text-align: center;
   }
+  .thought {
+    position: relative;
+    width: 300px;
+    height: 140px;
+    padding: 1rem 1rem 0;
+    text-align: center;
+    background-color: #fff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.3em;
+    border: 8px solid #0086ea;
+    border-radius: 30px;
+    margin-left: 325px;
+  }
+  .thought:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 30px;
+    top: 156px;
+    border: 25px solid;
+    border-color: #0086ea transparent transparent #0086ea;
+  }
+  .thought:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 38px;
+    top: 156px;
+    border: 15px solid;
+    border-color: #fff transparent transparent #fff;
+  }
   .images {
     background-color: #FFFFFF;
     margin-left: auto;
     margin-right: auto;
     display: block;
     text-align: center;
+  }
+  .state {
+    background-color: #FFFFFF;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #000;
   }
   .joke {
     padding: 10px;
