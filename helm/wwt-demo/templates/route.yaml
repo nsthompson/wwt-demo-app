@@ -1,0 +1,18 @@
+{{ if eq .Values.deploymentTarget "openshift" }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  host:
+    "{{ .Release.Name }}.{{ .Values.openshiftCluster.ingressDomain }}"
+  to:
+    kind: Service
+    name: {{ .Release.Name }}
+    weight: 100
+  port:
+    targetPort: {{ .Values.service.targetPort }}
+  wildcardPolicy: None
+{{ end }}

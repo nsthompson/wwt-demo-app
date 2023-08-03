@@ -1,0 +1,9 @@
+apiVersion: v2
+name: wwt-demo
+description: A Helm chart for deploying the wwt-demo-app application.
+type: application
+version: 0.1.0
+appVersion: "0.0.1"
+maintainers:
+  - email: nick.thompson@wwt.com
+    name: Nick Thompson

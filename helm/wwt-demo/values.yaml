@@ -1,0 +1,20 @@
+deploymentTarget: kubernetes
+deploymentIngress:
+  type: nginx
+  host: kubernetes.docker.internal
+
+replicaCount: 2
+
+service:
+  type: ClusterIP
+  protocol: TCP
+  port: 8080
+  targetPort: 8080
+
+env:
+  name: dev
+  headerColor: blue
+  headerTitle: WWT Demo Application
+
+openshiftCluster:
+  ingressDomain: apps.observelab.rhhc.wwtatc.com
