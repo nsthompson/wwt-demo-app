@@ -3,6 +3,7 @@ import random
 import os
 import argparse
 import dbm
+from logging.config import dictConfig
 
 import requests
 from requests.exceptions import HTTPError
@@ -10,8 +11,23 @@ from requests.exceptions import HTTPError
 from flask import Flask, request, render_template, abort
 
 
-app = Flask(__name__)
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    }},
+    'handlers': {'wsgi': {
+        'class': 'logging.StreamHandler',
+        'stream': 'ext://flask.logging.wsgi_errors_stream',
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'DEBUG',
+        'handlers': ['wsgi']
+    }
+})
 
+app = Flask(__name__)
 
 color_codes = {
     "red": "#ef2325",
@@ -38,11 +54,11 @@ def get_joke():
         response = requests.get('https://icanhazdadjoke.com/', headers=headers, timeout=5)
         response.raise_for_status()
         json_response = response.json()
-        print(f"Received the following joke: {json_response.get('joke')}")
+        app.logger.info("Received the following joke: %s", json_response.get('joke'))
         return json_response.get('joke')
     except HTTPError as http_err:
-        print(f'HTTP error occurred: {http_err}')
-
+        app.logger.debug("HTTP error occurred: %s", http_err)
+        return http_err
 
 @app.route("/")
 def main():
@@ -56,7 +72,7 @@ def main():
             header_title=header_title,
             joke=get_joke()
             )
-
+    # State is OFF - Throw 404 Error
     abort(404)
 
 @app.route("/state", methods=['GET', 'POST'])
@@ -66,9 +82,11 @@ def state():
         if request.form['state_button'] == 'ON':
             # Set Flask Operational State
             db[b'mode']  = b'on'
+            app.logger.debug("Setting application state to ON")
         elif request.form['state_button'] == 'OFF':
             # Set Flask Operational State
             db[b'mode']  = b'off'
+            app.logger.debug("Setting application state to OFF")
 
     # Capture Current State
     if db[b'mode'] == b'on':
