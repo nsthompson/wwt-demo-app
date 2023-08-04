@@ -9,7 +9,14 @@ Header name and colors are customizable via environment variables or command lin
 | HEADER_COLOR | Choice of ["red", "blue", "darkblue", "pink"] |
 | HEADER_TITLE | Any provided string |
 
-This application also includes state management at the `/state` URL when the application is running.  When you set the state to `OFF`, the application will throw a `404` error when you attempt to access the main URL.  This capability has been added to support testing/monitoring of the application and simulating failures.
+This application also includes state management at the `/state` URL when the application is running.  When you set the state to `OFF`, the application will then issue 404 errors when you attempt to access the main URL.  This capability has been added to support testing/monitoring of the application and simulating failures.
+
+## Screen Shots
+
+![main-page](docs/images/main.png)
+![state-on](docs/images/state-on.png)
+![state-off](docs/images/state-off.png)
+![404](docs/images/404.png)
 
 ## CLI Usage
 
@@ -23,13 +30,13 @@ This application is available packaged and ready for use as a container and is p
 
 ### Pulling the Container
 
-#### Podman:
+#### Podman
 
 ```shell
 podman pull quay.io/nsthompson/wwt-demo-app
 ```
 
-#### Docker:
+#### Docker
 
 ```shell
 docker pull quay.io/nsthompson/wwt-demo-app
@@ -41,7 +48,7 @@ This application is also packaged and available for deployment on kubernetes or 
 
 When using helm, you will need to modify `helm/wwt-demo/values.yaml` to fit your environment.  The primary key/values that need to be addressed are:
 
-`deploymentTarget` - Set this to *kubernetes* or *openshift*
+`deploymentTarget` - Set this to `kubernetes` or `openshift`
 
 When using kubernetes, you will also need to adjust the configuration located under `deploymentIngress`.  This has currently been tested on native kubernetes running with Docker Desktop and NGINX ingress controller on MacOS.
 

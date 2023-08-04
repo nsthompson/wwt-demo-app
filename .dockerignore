@@ -1,2 +1,4 @@
 # ignore the following directories during COPY
 helm
+docs
+README.md
