@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WWT Demo App - State Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  </head>
+  <body>
+    <header style="background: {{ color }};">
+      <div class="container">
+        <h1 class="logo">{{ header_title }} - State Management</h1>
+        <strong><nav>
+          <ul class="menu">
+            <li><a href="/">New Joke</a></li>
+            <li><a href="https://www.wwt.com/" target="_blank">WWT.com</a></li>
+            <li><a href="https://www.wwt.com/atc" target="_blank">WWT ATC</a></li>
+          </ul>
+        </nav></strong>
+      </div>
+    </header>
+    <div class="container">
+        <div class="state">
+          <p>Current Application State is <b>{{ state }}</b></p>
+          <form method="post" action="/state">
+            <input type="submit" name="state_button" value="ON">
+            <input type="submit" name="state_button" value="OFF">
+          </form>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="hostname">
+          <p>Hostname: {{ name }}</p>
+        </div>
+    </div>
+  </body>
+</html>

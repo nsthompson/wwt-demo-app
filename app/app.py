@@ -2,15 +2,16 @@ import socket
 import random
 import os
 import argparse
+import dbm
 
 import requests
 from requests.exceptions import HTTPError
 
-from flask import Flask
-from flask import render_template
+from flask import Flask, request, render_template, abort
 
 
 app = Flask(__name__)
+
 
 color_codes = {
     "red": "#ef2325",
@@ -45,14 +46,53 @@ def get_joke():
 
 @app.route("/")
 def main():
-    # return 'Hello'
+    # Validate Operational State
+    if db[b'mode'] == b'on':
+        # return 'Hello'
+        return render_template(
+            'main.html',
+            name=socket.gethostname(),
+            color=color_codes[COLOR],
+            header_title=header_title,
+            joke=get_joke()
+            )
+
+    abort(404)
+
+@app.route("/state", methods=['GET', 'POST'])
+def state():
+    # Handle State Changes
+    if request.method == 'POST':
+        if request.form['state_button'] == 'ON':
+            # Set Flask Operational State
+            db[b'mode']  = b'on'
+        elif request.form['state_button'] == 'OFF':
+            # Set Flask Operational State
+            db[b'mode']  = b'off'
+
+    # Capture Current State
+    if db[b'mode'] == b'on':
+        current_state = "ON"
+    elif db[b'mode'] == b'off':
+        current_state = "OFF"
+
+    # Render Page
     return render_template(
-        'main.html',
+        'state.html',
         name=socket.gethostname(),
         color=color_codes[COLOR],
         header_title=header_title,
-        joke=get_joke()
+        state=current_state
         )
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template(
+        '404.html',
+        name=socket.gethostname(),
+        description=e
+        ), 404
 
 
 if __name__ == "__main__":
@@ -98,5 +138,9 @@ if __name__ == "__main__":
         print("Color not supported. Received '" + COLOR + "' expected one of " + SUPPORTED_COLORS)
         exit(1)
 
-    # Run Flask Application
-    app.run(host="0.0.0.0", port=8080)
+    # Open database and create if necessary
+    with dbm.open('cache', 'c') as db:
+        # Set Flask Operational State
+        db[b'mode']  = b'on'
+        # Run Flask Application
+        app.run(host="0.0.0.0", port=8080)
