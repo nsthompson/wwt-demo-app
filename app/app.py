@@ -9,7 +9,7 @@ import requests
 from requests.exceptions import HTTPError
 
 from flask import Flask, request, render_template, abort
-
+from prometheus_flask_exporter import PrometheusMetrics
 
 dictConfig({
     'version': 1,
@@ -28,6 +28,7 @@ dictConfig({
 })
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
 
 color_codes = {
     "red": "#ef2325",
