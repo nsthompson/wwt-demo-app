@@ -62,6 +62,10 @@ def get_joke():
         return http_err
 
 @app.route("/")
+@metrics.counter(
+    'main_page_requests', 'Number of main page requests by status', labels={
+        'status': lambda resp: resp.status_code}
+    )
 def main():
     # Validate Operational State
     if db[b'mode'] == b'on':
