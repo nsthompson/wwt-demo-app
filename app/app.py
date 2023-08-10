@@ -29,6 +29,7 @@ dictConfig({
 
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
+last_request_status = metrics.info('last_request_status', 'last request status')
 
 color_codes = {
     "red": "#ef2325",
@@ -64,7 +65,7 @@ def get_joke():
 @app.route("/")
 @metrics.counter(
     'main_page_requests', 'Number of main page requests by status', labels={
-        'status': lambda resp: resp.status_code}
+        'status': lambda r: r.status_code}
     )
 def main():
     # Validate Operational State
@@ -116,6 +117,13 @@ def page_not_found(e):
         name=socket.gethostname(),
         description=e
         ), 404
+
+@app.after_request
+def update_prometheus(response):
+    # Update last_request_status to the response status code - only for the / route
+    if request.path == "/":
+        last_request_status.set(response.status_code)
+    return response
 
 
 if __name__ == "__main__":
