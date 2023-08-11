@@ -1,5 +1,10 @@
+# Namespace / Openshift Project
+namespace: wwt-demo
+
+replicaCount: 1
+
 # deploymentTarget can be kubernetes or openshift
-deploymentTarget: kubernetes
+deploymentTarget: openshift
 # used when deploymentTarget is kubernetes
 deploymentIngress:
   type: nginx
@@ -8,15 +13,14 @@ deploymentIngress:
 openshiftCluster:
   ingressDomain: apps.observelab.rhhc.wwtatc.com
 
-replicaCount: 2
-
+# Service Configuration
 service:
   type: ClusterIP
   protocol: TCP
   port: 8080
   targetPort: 8080
 
+# Environment Configuration
 env:
-  name: dev
   headerColor: blue
   headerTitle: WWT Demo Application

@@ -29,12 +29,13 @@ spec:
               value: {{ .Values.env.headerColor }}
             - name: HEADER_TITLE
               value: {{ .Values.env.headerTitle }}
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 8080
-              scheme: HTTP
-            timeoutSeconds: 1
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 3
+          # Uncomment if you want readiness probes.
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 8080
+          #     scheme: HTTP
+          #   timeoutSeconds: 1
+          #   periodSeconds: 10
+          #   successThreshold: 1
+          #   failureThreshold: 3

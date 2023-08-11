@@ -9,6 +9,7 @@ spec:
     app: {{ .Chart.Name }}
   type: {{ .Values.service.type }}
   ports:
-    - protocol: {{ .Values.service.protocol | default "TCP" }}
+    - name: web
+      protocol: {{ .Values.service.protocol | default "TCP" }}
       port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.targetPort }}
