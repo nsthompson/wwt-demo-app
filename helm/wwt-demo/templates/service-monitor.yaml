@@ -1,0 +1,17 @@
+{{ if eq .Values.deploymentTarget "openshift" }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: {{ .Chart.Name }}
+  name: {{ .Release.Name }}-service-monitor
+  namespace: {{ .Values.namespace }}
+spec:
+  endpoints:
+  - interval: 30s
+    port: web
+    scheme: http
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+{{ end }}

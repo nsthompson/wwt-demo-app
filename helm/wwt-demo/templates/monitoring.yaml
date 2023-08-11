@@ -1,0 +1,66 @@
+{{ if eq .Values.deploymentTarget "openshift" }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app: {{ .Chart.Name }}
+    openshift.io/prometheus-rule-evaluation-scope: leaf-prometheus
+  name: {{ .Release.Name }}-rule
+  namespace: {{ .Values.namespace }}
+spec:
+  groups:
+    - name: main-page-status
+      rules:
+        - alert: MainPageHTTPStatusNotOK
+          expr: last_request_status!=200
+          for: 1m
+          labels:
+            severity: critical
+            event_action: recreate
+            event_name: MainPageHTTPStatus
+            app: {{ .Chart.Name }}
+          annotations:
+            summary: "Demo Application Main Page Failure"
+            description: "Demo Application Main Page has failed."
+            timestamp: {{ `'{{ with query "time()" }}{{ . | first | value }}{{ end }}'` }}
+---
+apiVersion: monitoring.coreos.com/v1beta1
+kind: AlertmanagerConfig
+metadata:
+  labels:
+    app: {{ .Chart.Name }}
+    alertmanagerConfig: {{ .Chart.Name }}
+  name: {{ .Release.Name }}-alert
+  namespace: {{ .Values.namespace }}
+spec:
+  route:
+    groupBy:
+      - namespace
+    groupWait: 10s
+    groupInterval: 1m
+    repeatInterval: 5m
+    receiver: 'bigpanda_slack'
+    matchers:
+      - name: namespace
+        value: {{ .Values.namespace }}
+  receivers:
+    - name: 'bigpanda_slack'
+      webhookConfigs:
+        - urlSecret:
+            key: bigpanda_url
+            name: {{ .Chart.Name }}-secrets
+          sendResolved: true
+          httpConfig:
+            authorization:
+              type: Bearer
+              credentials:
+                key: bigpanda_token
+                name: {{ .Chart.Name }}-secrets
+      slackConfigs:
+        - channel: openshift-alerts
+          apiURL:
+            key: slack_api_url
+            name: {{ .Chart.Name }}-secrets
+          sendResolved: true
+{{ end }}
