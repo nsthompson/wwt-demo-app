@@ -20,6 +20,7 @@ spec:
             event_action: recreate
             event_name: MainPageHTTPStatus
             app: {{ .Chart.Name }}
+            openshiftRoute: "{{ .Release.Name }}.{{ .Values.openshiftCluster.ingressDomain }}"
           annotations:
             summary: "Demo Application Main Page Failure"
             description: "Demo Application Main Page has failed."
