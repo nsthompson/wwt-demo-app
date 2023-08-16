@@ -1,3 +1,5 @@
+[![Docker Repository on Quay](https://quay.io/repository/nsthompson/wwt-demo-app/status "Docker Repository on Quay")](https://quay.io/repository/nsthompson/wwt-demo-app)
+
 # WWT Demo Web Application
 
 Python and Flask based application to render a web page with a dad joke.
