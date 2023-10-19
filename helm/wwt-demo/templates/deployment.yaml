@@ -13,8 +13,6 @@ spec:
     metadata:
       labels:
         app: {{ .Chart.Name }}
-      annotations:
-        sidecar.istio.io/inject: 'true'
     spec:
       containers:
         - name: {{ .Release.Name }}
